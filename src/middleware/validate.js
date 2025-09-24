@@ -1,13 +1,13 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const contactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
+  name: z.string().min(2, "Name required"),
+  email: z.string().email("Valid email required"),
   phone: z.string().optional(),
-  projectType: z.string().min(1),
+  projectType: z.string().optional(),  // make required if your form always sends it
   budget: z.string().optional(),
-  message: z.string().min(10),
-  agree: z.boolean(),
+  message: z.string().min(10, "Message too short"),
+  agree: z.boolean().optional(),       // make required if you have a checkbox
 });
 
 export function validateBody(schema) {
