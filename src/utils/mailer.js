@@ -1,19 +1,19 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 export async function sendContactEmail(data) {
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: process.env.SMTP_SECURE === 'true',
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT) || 465,
+    secure: process.env.SMTP_SECURE === "true",
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: process.env.EMAIL_USER,   // <-- match Render
+      pass: process.env.EMAIL_PASS,   // <-- match Render
     },
   });
 
   await transporter.sendMail({
-    from: process.env.MAIL_FROM,
-    to: process.env.MAIL_TO,
+    from: `"Soleva Contact" <${process.env.EMAIL_USER}>`, // Gmail requires this to match
+    to: process.env.EMAIL_TO || process.env.EMAIL_USER,
     replyTo: data.email,
     subject: `New contact from ${data.name}`,
     text: `

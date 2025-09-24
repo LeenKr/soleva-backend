@@ -5,9 +5,7 @@ import compression from "compression";
 import rateLimit from "express-rate-limit";
 
 const app = express();
-
-/* --- trust proxy (Render uses a reverse proxy) --- */
-app.set("trust proxy", 1); // fixes X-Forwarded-For error
+app.set("trust proxy", 1);
 
 /* --- security & parsing --- */
 app.use(helmet());
